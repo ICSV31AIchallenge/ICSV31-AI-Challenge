@@ -1,6 +1,6 @@
 # ICSV31-AI-Challenge
 
-This repository contains of 2025 ICSV31 AI Challenge descriptions and baseline code.
+This repository contains 2025 ICSV31 AI Challenge descriptions and baseline code.
 
 ## Update history
 
@@ -16,34 +16,34 @@ This repository contains of 2025 ICSV31 AI Challenge descriptions and baseline c
 
 The ultimate goal of the competition is to develop anomaly detection models capable of identifying anomalies in drones using data collected under various conditions.
 
-- Participants will train deep learning models using training dataset and are required to effectively detect anomalous drone sounds using test datasaet.
-- Reflecting the real-world limitation of collecting a small amount of anomalous drone data, participants will tackle the challenge of distinguishing between normal and anomalous drone sounds by training deep learning models exclusively on normal drone data. (*Self-Supervised Learning*) 
-- The training dataset includes normal sounds from three types of quadcopter drones maneuvering in six flight directions. The evaluation dataset contains anomalous sounds from six types of faulty drones with motor or blade tip defects. The test dataset introduces two new types of anomalies that were not included in the training phase. Additionally, all datasets are augmented with environmental noise from four distinct locations to simulate real-world conditions.
-- After training, participants must calculate and submit anomaly scores for both evaluation dataset and test dataset containing a mix of normal and anomalous drone data.
+- Participants are required to train deep learning models detecting anomalous drone sounds in test data, through the model training using the training dataset.
+- Reflecting the real-world limitation of collecting a small amount of anomalous drone data, participants will tackle the challenge of training deep learning models exclusively on normal drone data. (*Self-Supervised Learning*) 
+- The training dataset includes normal sounds from three types of quadcopter drones maneuvered in six flight directions. The evaluation dataset contains anomalous sounds from six types of faulty drones with motor or blade tip defects. The test dataset introduces two new types of anomalies not provided in the training phase. To simulate real-world conditions, all data are augmented with environmental noise recorded in four distinct places.
+- After training, participants must calculate and submit anomaly scores for both the evaluation and test datasets containing a mix of normal and anomalous drone data.
 
 
 
 ## Dataset
 
 Dataset for ICSV31 AI Challenge: https://drive.google.com/file/d/1Lbw1mxgNWTBWjsR1IIzC97UCihdD9-bO/view?usp=sharing
+The ICSV31 AI Challenge dataset is based on the drone noise dataset, originally constructed by Wonjun Yi and JaeWoo Lee for the drone fault classification task.  
+(W. Yi, J-W. Choi., J-W. Lee, "Sound-based drone fault classification using multi-task learning", Proceedings of the 29th International Congress on Sound and Vibration (ICSV 29), Prague, Czech Republic, July. 2023.)
 
-
-
-The drones used in this study include the Holy Stone HS720 **(Type A)**, MJX Bugs 12 EIS **(Type B)**, and ZLRC SG906 Pro2 **(Type C)**.
+The drones used for this dataset include the Holy Stone HS720 **(Type A)**, MJX Bugs 12 EIS **(Type B)**, and ZLRC SG906 Pro2 **(Type C)**.
 
 ![Figure1](figures/drones.png)
 Figure 1: Three drone types used for the experiment.
 (a) Type A (Holy Stone HS720), (b) Type B (MJX Bugs 12 EIS), (c) Type C (ZLRC SG960 pro2)
 
 
-Drone sounds were recorded using a RØDE Wireless Go2 wireless microphone, which was mounted on the top of the drone. The sensitivity was adjusted to prevent clipping even at high sound pressure levels. The recordings were conducted in an anechoic chamber to eliminate wall reflections.
+Drone sounds were recorded using a RØDE Wireless Go2 wireless microphone mounted on the top of the drone. The sensitivity was adjusted to prevent clipping even at high sound pressure levels. The recordings were conducted in an anechoic chamber to eliminate wall reflections.
 ![Figure2](figures/microphones.png)
 Figure 2: (a) Røde Wireless Go2 microphones (transmitter, receiver), (b) recording sounds of drone type B 
 
 
 
-The recorded drone sounds, originally sampled at 48 kHz, were downsampled to 16 kHz and segmented into 2 second segments.
-- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of 10–15 dB, and additional outdoor noise was incorporated at an SNR of -5 to 5 dB to simulate real-flight conditions. The outdoor noise consisted of recordings from three distinct campus locations (ponds, hills, and gates), as well as industrial noise from ToyADMOS Noise, which was recorded in a real factory environment.
+The recorded drone sounds, originally sampled at 48 kHz, were downsampled to 16 kHz and segmented into 2-second segments.
+- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of 10–15 dB, and additional outdoor noise was incorporated at an SNR of -5 to 5 dB to simulate real-flight conditions. The outdoor noise consists of recordings from three distinct campus locations (ponds, hills, and gates), as well as industrial (factory) noise adopted from the ToyADMOS Noise dataset.
 
 
 ![Figure3](figures/fault.png)
@@ -53,7 +53,10 @@ Figure 3: Three different spots on the university campus chosen for background n
 
 
 - The drones were secured with two elastic ropes connected to the ceiling and floor, allowing free rotation and movement. A rotating ring was employed to minimize the impact of the ropes on the drone's motion.
-- The drone state labels comprise nine categories, including the normal state, four types of propeller defects, and four types of motor defects. The movement direction labels include six categories: forward, backward, right, left, clockwise, and counterclockwise.
+- The movement direction labels include six categories: forward, backward, right, left, clockwise, and counterclockwise.
+
+Anomalous drone sounds were produced by applying 
+- The drone state labels comprise nine categories, including the normal state, four types of propeller defects, and four types of motor defects. [//]:<>#(why do we need state labels for defects?)
 - The types of drone defects include ***propeller defects*** (induced by cutting approximately 10% of a single propeller to generate abnormal vibrations) and ***motor defects*** (created by denting the motor cap using a vise to increase friction and hinder rotation).
 
 ![Figure4](figures/backgrounds.png)
@@ -168,7 +171,7 @@ The **anomaly score** is computed using the mean squared error (MSE) between the
 
 Let the input spectrogram be $\mathbf{X} = [\mathbf{x}_1, \dots , \mathbf{x}_T] \in R^{F \times T},$ where $F$ and $T$ represent the **frequency** and **time** dimensions of the spectrogram, respectively.
 
-The model $\psi_{\phi}$ takes input data of length equal to the receptive field, $[\mathbf{x}_1, \dots, \mathbf{x}_l]$, and predicts the next spectral frame $\hat{\mathbf{x}}_{l+1}$. This is formulated as:
+The model $\psi_{\phi}$ takes input data of length equal to the receptive field, $\mathbf{x}_{1}, \dots, \mathbf{x}_{l}$, and predicts the next spectral frame $\hat{\mathbf{x}}_{l+1}$. This is formulated as:
 $\hat{\mathbf{x}}_{t+1} = \psi_{\phi}(\mathbf{x}_{t-l+1}, \cdots, \mathbf{x}_{t}).$
 
 Given the input data $\mathbf{X} = [\mathbf{x}_1, \dots , \mathbf{x}_T],$ the model predicts $\hat{\mathbf{X}} = [\hat{\mathbf{x}}_{l+1}, \dots, \hat{\mathbf{x}}_{T+1}]$.
