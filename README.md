@@ -1,4 +1,4 @@
-# ICSV31-AI-Challenge
+ # ICSV31-AI-Challenge
 
 This repository contains 2025 ICSV31 AI Challenge descriptions and baseline code.
 
