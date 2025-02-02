@@ -16,11 +16,13 @@ This repository contains of 2025 ICSV31 AI Challenge descriptions and baseline c
 
 The ultimate goal of the competition is to develop anomaly detection models capable of identifying anomalies in drones using data collected under various conditions.
 
-- Participants will train deep learning models using training dataset and are required to effectively detect anomalous drone sounds using test datasaet.
-- Reflecting the real-world limitation of collecting a small amount of anomalous drone data, participants will tackle the challenge of distinguishing between normal and anomalous drone sounds by training deep learning models exclusively on normal drone data. (*Self-Supervised Learning*) 
-- The training dataset includes normal sounds from three types of quadcopter drones maneuvering in six flight directions. The evaluation dataset contains anomalous sounds from six types of faulty drones with motor or blade tip defects. The test dataset introduces two new types of anomalies that were not included in the training phase. Additionally, all datasets are augmented with environmental noise from four distinct locations to simulate real-world conditions.
-- After training, participants must calculate and submit anomaly scores for both evaluation dataset and test dataset containing a mix of normal and anomalous drone data.
-
+- Participants are required to train deep learning models detecting anomalous drone sounds in test data, through the model training using the training dataset.
+- Reflecting the real-world limitation of collecting a small amount of anomalous drone data, participants will tackle the challenge of training deep learning models exclusively on normal drone data. (*Self-Supervised Learning*) 
+- `Training dataset` includes normal sounds from three types of quadcopter drones maneuvered in six flight directions. `Evaluation dataset`, which includes normal and anomalous drone sounds, is also provided for the self-evaluation of developed models. The anomalous sounds were generated from faulty drones with motor or blade tip defects.
+- `Test dataset` will be released one month before the date of submission. `Test dataset` includes data for final evaluation and introduces two new types of anomalies not provided in the evaluation dataset. 
+- To simulate real-world conditions, all data were augmented with environmental noise recorded in four distinct places.
+- Participants must submit anomaly scores for both the `evaluation dataset` and `test dataset`. The organizing committee will calculate ROC-AUCs based on the submitted anomaly scores, and the weighted average of ROC-AUCs will be used to evaluate the final performance.
+- The use of external datasets for model training is allowed, as long as the datasets are released to the public before 2025. In this case, participants should declare which dataset was employed in the technical report.  
 
 
 ## Dataset
