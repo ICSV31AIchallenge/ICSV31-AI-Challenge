@@ -43,7 +43,7 @@ Figure 2: (a) Røde Wireless Go2 microphones (transmitter, receiver), (b) record
 
 
 The recorded drone sounds, originally sampled at 48 kHz, were downsampled to 16 kHz and segmented into 2 second segments.
-- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of 10–15 dB, and additional outdoor noise was incorporated at an SNR of -5 to 5 dB to simulate real-flight conditions. The outdoor noise consisted of recordings from three distinct campus locations (ponds, hills, and gates), as well as industrial noise from ToyADMOS Noise, which was recorded in a real factory environment.
+- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of -5 to 5 dB to simulate real-flight conditions. The background noise consisted of recordings from three distinct campus locations (ponds, hills, and gates), as well as industrial noise from ToyADMOS Noise, which was recorded in a real factory environment.
 
 
 ![Figure3](figures/fault.png)
@@ -57,7 +57,7 @@ Figure 3: Three different spots on the university campus chosen for background n
 - The types of drone defects include ***propeller defects*** (induced by cutting approximately 10% of a single propeller to generate abnormal vibrations) and ***motor defects*** (created by denting the motor cap using a vise to increase friction and hinder rotation).
 
 ![Figure4](figures/backgrounds.png)
-Figure 4: Faults of drone type B. (a) propeller cut, (b) dented motor cap (red circle indicates dented part)
+Figure 4: Defects of drone type B. (a) propeller cut, (b) dented motor cap (red circle indicates dented part)
 
 
 ### Dataset category
@@ -84,14 +84,14 @@ Data is provided in three categories: `train`, `eval`, and `test` for competitio
 
 The filenames for the `train` dataset follow the format:
 
-**`[dataset]_[drone_type]_[moving_direction]_[anomaly_type]_[data_index].wav`**
+**`[dataset]_[drone_type]_[moving_direction]_[anomaly_label]_[data_index].wav`**
 
 where:
 
 - `[dataset]` represents the dataset type (`train` / `eval` / `test`).
 - `[drone_type]` denotes the drone type (`A` / `B` / `C`).
 - `[moving_direction]` indicates the movement direction (`Front` / `Back` / `Right` / `Left` / `Clockwise` / `CounterClockwise`).
-- `[anomaly_type]` specifies whether the data corresponds to a normal or anomalous condition (`normal` / `anomaly`).
+- `[anomaly_label]` specifies whether the data corresponds to a normal or anomalous condition (`normal` / `anomaly`).
 - `[data_index]` is a unique identifier for the data file.
 
     
@@ -124,7 +124,7 @@ The outdoor noise sources include recordings from **three distinct campus locati
 
 ![evaluation dataset](figures/evaluation_dataset.png)
 
-- The number of types is **60** per drone type, movement direction, and anomaly type.
+- The number of types is **60** per drone type, movement direction, and defect type.
 - The total number of files is **60 × 3 (drone types) × 6 (movement directions) = 1,080**.
 - **MF**: Motor Cap Fault
 - **PC**: Propeller Cut
@@ -134,7 +134,7 @@ The outdoor noise sources include recordings from **three distinct campus locati
 
 ![test dataset](figures/test_dataset.png)
 
-- The number of types is **80** per drone type, movement direction, and anomaly type.
+- The number of types is **80** per drone type, movement direction, and defect type.
 - The total number of files is **80 × 3 (drone types) × 6 (movement directions) = 1,440**.
 
 
