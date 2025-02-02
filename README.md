@@ -124,7 +124,7 @@ The outdoor noise sources include recordings from **three distinct campus locati
 
 ![evaluation dataset](figures/evaluation_dataset.png)
 
-- The number of types is **60** per drone type, movement direction, and defect type.
+- The number of files is **60** per drone type, moving direction, and defect type.
 - The total number of files is **60 × 3 (drone types) × 6 (movement directions) = 1,080**.
 - **MF**: Motor Cap Fault
 - **PC**: Propeller Cut
@@ -134,7 +134,7 @@ The outdoor noise sources include recordings from **three distinct campus locati
 
 ![test dataset](figures/test_dataset.png)
 
-- The number of types is **80** per drone type, movement direction, and defect type.
+- The number of files is **80** per drone type, moving direction, and defect type.
 - The total number of files is **80 × 3 (drone types) × 6 (movement directions) = 1,440**.
 
 
