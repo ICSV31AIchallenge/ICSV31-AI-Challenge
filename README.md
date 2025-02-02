@@ -1,4 +1,4 @@
-# ICSV31-AI-Challenge
+# ICSV31-AI-Challenge (2nd KSNVE AI Challenge)
 
 This repository contains of 2025 ICSV31 AI Challenge descriptions and baseline code.
 
@@ -18,19 +18,22 @@ The ultimate goal of the competition is to develop anomaly detection models capa
 
 - Participants are required to train deep learning models detecting anomalous drone sounds in test data, through the model training using the training dataset.
 - Reflecting the real-world limitation of collecting a small amount of anomalous drone data, participants will tackle the challenge of training deep learning models exclusively on normal drone data. (*Self-Supervised Learning*) 
-- `Training dataset` includes normal sounds from three types of quadcopter drones maneuvered in six flight directions. `Evaluation dataset`, which includes normal and anomalous drone sounds, is also provided for the self-evaluation of developed models. The anomalous sounds were generated from faulty drones with motor or blade tip defects.
-- `Test dataset` will be released one month before the date of submission. `Test dataset` includes data for final evaluation and introduces two new types of anomalies not provided in the evaluation dataset. 
+- `Train dataset` includes normal sounds from three types of quadcopter drones maneuvered in six flight directions. `Eval dataset`, which includes normal and anomalous drone sounds, is also provided for the self-evaluation of developed models. The anomalous sounds were generated from faulty drones with motor or blade tip defects.
+- `Test dataset` will be released one month before the date of submission. `Test dataset` includes data for final evaluation and introduces two new types of anomalies not provided in the `eval dataset`. 
 - To simulate real-world conditions, all data were augmented with environmental noise recorded in four distinct places.
-- Participants must submit anomaly scores for both the `evaluation dataset` and `test dataset`. The organizing committee will calculate ROC-AUCs based on the submitted anomaly scores, and the weighted average of ROC-AUCs will be used to evaluate the final performance.
-- The use of external datasets for model training is allowed, as long as the datasets are released to the public before 2025. In this case, participants should declare which dataset was employed in the technical report.  
+- Participants must submit anomaly scores for both the `eval dataset` and `test dataset`. The organizing committee will calculate ROC-AUCs based on the submitted anomaly scores, and the weighted average of ROC-AUCs will be used to evaluate the final performance.
+- The use of external datasets for model training is allowed, as long as the datasets are released to the public before 2025. 
+  In this case, participants should declare which dataset was employed in the technical report.  
 
 
 ## Dataset
 
-Dataset for ICSV31 AI Challenge: https://drive.google.com/file/d/1Lbw1mxgNWTBWjsR1IIzC97UCihdD9-bO/view?usp=sharing
+Dataset for ICSV31 AI Challenge: [download](https://drive.google.com/file/d/1Lbw1mxgNWTBWjsR1IIzC97UCihdD9-bO/view?usp=sharing)
+This ICSV31 AI Challenge dataset is based on the [drone noise data](https://arxiv.org/abs/2304.11708), originally constructed by Wonjun Yi, Jung-Woo Choi, Jae-Woo Lee of KAIST for the drone fault classification task.  
+(W. Yi, J-W. Choi., J-W. Lee, "Sound-based drone fault classification using multi-task learning", Proceedings of the 29th International Congress on Sound and Vibration (ICSV 29), Prague, Czech Republic, July. 2023.)
+The previous dataset was significantly modified for this specific challenge. 
 
-
-
+### Dataset construction
 The drones used in this study include the Holy Stone HS720 **(Type A)**, MJX Bugs 12 EIS **(Type B)**, and ZLRC SG906 Pro2 **(Type C)**.
 
 ![Figure1](figures/drones.png)
@@ -38,14 +41,14 @@ Figure 1: Three drone types used for the experiment.
 (a) Type A (Holy Stone HS720), (b) Type B (MJX Bugs 12 EIS), (c) Type C (ZLRC SG960 pro2)
 
 
-Drone sounds were recorded using a RØDE Wireless Go2 wireless microphone, which was mounted on the top of the drone. The sensitivity was adjusted to prevent clipping even at high sound pressure levels. The recordings were conducted in an anechoic chamber to eliminate wall reflections.
+Drone sounds were recorded using a RØDE Wireless Go2 wireless microphone mounted on the top of the drone body. The sensitivity of the microphone was adjusted to prevent clipping even at high sound pressure levels. The recordings were conducted in an anechoic chamber to eliminate wall reflections.
 ![Figure2](figures/microphones.png)
 Figure 2: (a) Røde Wireless Go2 microphones (transmitter, receiver), (b) recording sounds of drone type B 
 
 
 
-The recorded drone sounds, originally sampled at 48 kHz, were downsampled to 16 kHz and segmented into 2 second segments.
-- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of 10–15 dB, and additional outdoor noise was incorporated at an SNR of -5 to 5 dB to simulate real-flight conditions. The outdoor noise consisted of recordings from three distinct campus locations (ponds, hills, and gates), as well as industrial noise from ToyADMOS Noise, which was recorded in a real factory environment.
+The recorded drone sounds, originally sampled at 48 kHz, were downsampled to 16 kHz and segmented into 2-second segments.
+- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of -5 to 5 dB to simulate real-flight conditions. The background noise consists of recordings from three distinct outdoor locations (ponds, hills, and gates), as well as industrial noise from ToyADMOS Noise recorded in a real factory environment.
 
 
 ![Figure3](figures/fault.png)
@@ -55,8 +58,9 @@ Figure 3: Three different spots on the university campus chosen for background n
 
 
 - The drones were secured with two elastic ropes connected to the ceiling and floor, allowing free rotation and movement. A rotating ring was employed to minimize the impact of the ropes on the drone's motion.
-- The drone state labels consist of two categories: normal and anomaly. The movement direction labels include six categories: forward, backward, right, left, clockwise, and counterclockwise.
-- The types of drone defects include ***propeller defects*** (induced by cutting approximately 10% of a single propeller to generate abnormal vibrations) and ***motor defects*** (created by denting the motor cap using a vise to increase friction and hinder rotation).
+- The movement direction labels include six categories: forward, backward, right, left, clockwise, and counterclockwise.
+
+- Abnormal data were produced by incorporating defects to the drone's propeller or motor. The ***propeller defects*** were generated by cutting approximately 10% of a single propeller to generate abnormal vibrations, and ***motor defects*** were created by denting the motor cap using a vise to increase friction and hinder rotation.
 
 ![Figure4](figures/backgrounds.png)
 Figure 4: Faults of drone type B. (a) propeller cut, (b) dented motor cap (red circle indicates dented part)
@@ -64,16 +68,15 @@ Figure 4: Faults of drone type B. (a) propeller cut, (b) dented motor cap (red c
 
 ### Dataset category
 
-
-Data is provided in three categories: `train`, `eval`, and `test` for competition submission.
-
-
-> The `eval` and `test` datasets must not be used for model training.  
+Data is provided in three categories: `train` and `eval` for development, and `test` for competition submission.
 
 
-- The `train` dataset consists of data from drones without defects.
+> The `eval` and `test` datasets must not be directly utilized as the training data. 
+
+
+- The `train` dataset consists of data from normal drones without defects.
 - The `eval` dataset is provided for assessing the performance of the developed model.
-- The `test` dataset, along with the `eval` dataset, is intended solely for competition submission. It should only be used to perform anomaly diagnosis using the trained model and submit the results.
+- The `test` dataset, along with the `eval` dataset, is intended solely for competition submission. It should only be used to perform diagnosis of the trained model and submit the results.
 - The `eval` dataset includes six types of defects: three propeller defects and three motor defects. In contrast, the `test` dataset contains a total of eight defect types, incorporating one additional propeller defect and one additional motor defect not present in the `eval` dataset.
 
 
