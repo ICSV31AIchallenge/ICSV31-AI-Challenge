@@ -43,7 +43,7 @@ Figure 2: (a) Røde Wireless Go2 microphones (transmitter, receiver), (b) record
 
 
 The recorded drone sounds, originally sampled at 48 kHz, were downsampled to 16 kHz and segmented into 2 second segments.
-- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of -5 to 5 dB to simulate real-flight conditions. The background noise consisted of recordings from three distinct campus locations (ponds, hills, and gates), as well as industrial noise from ToyADMOS Noise, which was recorded in a real factory environment.
+- The drone sounds were mixed with background noise at a signal-to-noise ratio (SNR) of -5 to 5 dB to simulate real-flight conditions. The background noise consisted of recordings from three distinct campus locations (ponds, hills, and gates), as well as industrial noise from DEMAND Noise, which includes noise from the park, town square, and traffic intersection environments.
 
 
 ![Figure3](figures/fault.png)
@@ -105,9 +105,9 @@ The filenames for the `test` dataset follow the format:
 
 ### Noise addition
 
-To create a dataset that closely resembles real-world industrial environments, background noise recorded from real outdoor environments and ToyADMOS background noise were added to the vibration signals at a signal-to-noise ratio (SNR) of [-5, 5] dB.
+To create a dataset that closely resembles real-world industrial environments, background noise recorded from real outdoor environments and DEMAND noise were added to the signals at a signal-to-noise ratio (SNR) of [-5, 5] dB.
 
-The outdoor noise sources include recordings from **three distinct campus locations (ponds, hills, and gates)** as well as **ToyADMOS Noise**, which represents noise from **a real factory environment**.
+The outdoor noise sources include recordings from **three distinct campus locations (ponds, hills, and gates)** as well as **DEMAND Noise**, which includes noise from the **park, town square, and traffic intersection environments**.
 
 
 ### Data specification
